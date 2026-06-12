@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.sellio",
+      "sha256_cert_fingerprints": [
+        "94:47:90:74:c2:51:99:15:2d:e7:ed:5c:7e:91:82:43:b6:2a:58:bb:43:54:a5:1b:3b:0f:9d:27:d2:29:4a:0b"
+      ]
+    }
+  }
+]
