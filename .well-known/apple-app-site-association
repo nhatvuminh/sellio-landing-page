@@ -1,25 +1,16 @@
 {
   "applinks": {
+    "apps": [],
     "details": [
       {
-        "appIDs": ["5G44VLUMAQ.com.sellio"],
-        "components": [
-          {
-            "/": "/stripe/return",
-            "comment": "Stripe onboarding return opens Sellio."
-          },
-          {
-            "/": "/stripe/refresh",
-            "comment": "Stripe onboarding refresh opens Sellio."
-          },
-          {
-            "/": "/lander",
-            "comment": "Sellio landing links open the app when installed."
-          },
-          {
-            "/": "/*",
-            "comment": "Allow all Sellio Vercel links to open the app."
-          }
+        "appID": "5G44VLUMAQ.com.sellio",
+        "paths": [
+          "/stripe/return",
+          "/stripe/return/*",
+          "/stripe/refresh",
+          "/stripe/refresh/*",
+          "/lander",
+          "/lander/*"
         ]
       }
     ]

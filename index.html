@@ -300,30 +300,43 @@
     </main>
 
     <script>
-      const path = window.location.pathname;
+      const path = window.location.pathname.replace(/\/$/, '');
       const params = window.location.search || '';
       const isStripeReturn = path === '/stripe/return';
       const isStripeRefresh = path === '/stripe/refresh';
-      const appUrl = isStripeRefresh
-        ? `sellio://stripe/refresh${params}`
-        : `sellio://stripe/return${params}`;
+      const stripeMode = isStripeRefresh ? 'refresh' : 'return';
+      const appUrl = `sellio://stripe/${stripeMode}${params}`;
 
       const manualButton = document.getElementById('manual-return-button');
       const openAppButton = document.getElementById('open-app-button');
       const title = document.getElementById('redirect-title');
       const copy = document.getElementById('redirect-copy');
 
-      manualButton.href = appUrl;
-      openAppButton.href = appUrl;
+      function setAppLinks() {
+        manualButton.href = appUrl;
+        openAppButton.href = appUrl;
+      }
+
+      function openSellioApp() {
+        window.location.assign(appUrl);
+      }
+
+      setAppLinks();
 
       if (isStripeReturn || isStripeRefresh) {
         title.textContent = isStripeRefresh
-          ? 'Phiên thiết lập Stripe cần được làm mới.'
+          ? 'Cần tiếp tục thiết lập Stripe trong Sellio.'
           : 'Thiết lập Stripe đã hoàn tất.';
-        copy.textContent = 'Sellio đang mở lại ứng dụng để cập nhật trạng thái payout của bạn.';
+        copy.textContent = 'Đang mở lại ứng dụng Sellio để cập nhật trạng thái payout của bạn. Nếu trình duyệt không tự chuyển, hãy bấm “Quay về app”.';
+
+        // Some mobile browsers block custom-scheme navigation unless it happens
+        // shortly after page load. Keep a visible manual fallback for reliability.
+        window.setTimeout(openSellioApp, 250);
         window.setTimeout(() => {
-          window.location.href = appUrl;
-        }, 650);
+          if (!document.hidden) {
+            manualButton.focus({ preventScroll: true });
+          }
+        }, 1400);
       } else {
         title.textContent = 'Bạn đang xem trang giới thiệu Sellio.';
         copy.textContent = 'Nếu đã cài ứng dụng, hãy bấm nút để mở Sellio.';
